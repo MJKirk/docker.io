@@ -16,10 +16,8 @@ RUN useradd -ms /bin/bash analysis \
 
 # switch user
 USER analysis
+ENV PATH="/home/analysis/.local/bin:$PATH"
 
-# install python packages
-RUN pip3 install --user --upgrade \
-    argcomplete cython ipython ipykernel jupyter matplotlib nbconvert networkx numpy 'pypmc>=1.2.2' pyyaml scipy \
-    termcolor wilson \
-    numpy pyhf pandas cabinetry matplotlib uproot pyunfold
-RUN pip3 install --user --upgrade --pre 'eoshep>=1.0.10'
+# install eos (and dependencies)
+ARG EOS_VERSION
+RUN pip3 install --user --upgrade "eoshep==$EOS_VERSION"
